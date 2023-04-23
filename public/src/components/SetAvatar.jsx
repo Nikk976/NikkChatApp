@@ -12,7 +12,7 @@ export default function SetAvatar() {
   const navigate = useNavigate();
   const [avatars, setAvatars] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [selectedAvatar, setSelectedAvatar] = useState(undefined);
+  const [selectedAvatar, setSelectedAvatar] = useState("");
   const toastOptions = {
     position: "bottom-right",
     autoClose: 8000,
@@ -22,12 +22,15 @@ export default function SetAvatar() {
   };
 
   useEffect(async () => {
+    const checkUser = async ()=>{
     if (!localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY))
       navigate("/login");
+    }
+    checkUser();
   }, []);
 
   const setProfilePicture = async () => {
-    if (selectedAvatar === undefined) {
+    if (selectedAvatar === "") {
       toast.error("Please select an avatar", toastOptions);
     } else {
       const user = await JSON.parse(
@@ -53,6 +56,7 @@ export default function SetAvatar() {
   };
 
   useEffect(async () => {
+    const fetchData = async ()=>{
     const data = [];
     for (let i = 0; i < 4; i++) {
       const image = await axios.get(
@@ -63,6 +67,8 @@ export default function SetAvatar() {
     }
     setAvatars(data);
     setIsLoading(false);
+  }
+  fetchData();
   }, []);
   return (
     <>
