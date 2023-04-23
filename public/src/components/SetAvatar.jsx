@@ -12,7 +12,7 @@ export default function SetAvatar() {
   const navigate = useNavigate();
   const [avatars, setAvatars] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [selectedAvatar, setSelectedAvatar] = useState("");
+  const [selectedAvatar, setSelectedAvatar] = useState(undefined);
   const toastOptions = {
     position: "bottom-right",
     autoClose: 8000,
@@ -30,7 +30,7 @@ export default function SetAvatar() {
   }, []);
 
   const setProfilePicture = async () => {
-    if (selectedAvatar === "") {
+    if (selectedAvatar === undefined) {
       toast.error("Please select an avatar", toastOptions);
     } else {
       const user = await JSON.parse(
