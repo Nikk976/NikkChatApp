@@ -5,10 +5,16 @@ const authRoutes = require("./routes/auth");
 const messageRoutes = require("./routes/messages");
 const app = express();
 const socket = require("socket.io");
+const path = require('path');
 require("dotenv").config();
 
-app.use(cors());
+app.use(cors({
+  origin: 'http://127.0.0.1:3000',
+}));
 app.use(express.json());
+
+// serving the react files
+app.use(express.static(path.join(__dirname + "/public")));
 
 mongoose
   .connect(process.env.MONGO_URL, {
